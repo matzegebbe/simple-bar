@@ -4,8 +4,12 @@ import SpaceOptions from "./space-options.jsx";
 import * as Utils from "../../utils";
 import * as Yabai from "../../yabai";
 import * as Settings from "../../settings";
-
 const settings = Settings.get();
+
+const handleDoubleClick = (spaceIndex) => {
+  console.log("handleDoubleClick " + spaceIndex);
+  //Uebersicht.run(`/Users/mgebbe/workspace/mac/scripts/label-space.scpt`);
+}
 
 const Space = ({
   space,
@@ -32,7 +36,7 @@ const Space = ({
     type,
   } = space;
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(
-    label?.length ? label : index
+    label?.length ? index + ': ' + label : index
   );
 
   const { spacesDisplay } = settings;
@@ -80,6 +84,7 @@ const Space = ({
     Utils.switchSpace(currentSpaceIndex, index);
     Utils.clickEffect(e);
   };
+
   const onRightClick = (e) => {
     setHovered(true);
     setNoDelay(true);
@@ -138,6 +143,10 @@ const Space = ({
         <button
           className="space__inner"
           onClick={onClick}
+          onDoubleClick={(e) => {
+            e.stopPropagation();
+            handleDoubleClick(space.index);
+          }}
           onContextMenu={onRightClick}
         >
           <input
