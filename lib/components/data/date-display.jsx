@@ -22,7 +22,8 @@ const REFRESH_FREQUENCY = Settings.getRefreshFrequency(
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp || "Calendar";
-  Uebersicht.run(`open -a "${appName}"`);
+  Uebersicht.run(`osascript -e 'tell application "System Events" to keystroke "k" using {option down, command down}'`);
+  //Uebersicht.run(`open -a "${appName}"`);
 };
 
 export const Widget = () => {
