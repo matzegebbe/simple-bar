@@ -25,13 +25,21 @@ export const Widget = React.memo(() => {
     showOnDisplay,
   } = dateWidgetOptions;
 
+  const openCalendarApp = (calendarApp) => {
+    const appName = calendarApp || "Calendar";
+    Uebersicht.run(
+      `osascript -e 'tell application "System Events" to keystroke "k" using {option down, command down}'`,
+    );
+    //Uebersicht.run(`open -a "${appName}"`);
+  };
+
   const visible =
     Utils.isVisibleOnDisplay(displayIndex, showOnDisplay) && dateWidget;
 
   const refresh = React.useMemo(
     () =>
       Utils.getRefreshFrequency(refreshFrequency, DEFAULT_REFRESH_FREQUENCY),
-    [refreshFrequency]
+    [refreshFrequency],
   );
 
   const [state, setState] = React.useState();
@@ -45,7 +53,7 @@ export const Widget = React.memo(() => {
       month: formatOptions,
       day: "numeric",
     }),
-    [formatOptions]
+    [formatOptions],
   );
   const _locale = locale.length > 4 ? locale : "en-UK";
 
