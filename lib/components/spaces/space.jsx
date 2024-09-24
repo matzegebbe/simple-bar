@@ -41,7 +41,7 @@ export default function Space({
     type,
   } = space;
   const [spaceLabel, setSpaceLabel] = React.useState(
-    label?.length ? label : index
+    label?.length ? index + ": " + label : index,
   );
 
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null;
@@ -82,7 +82,8 @@ export default function Space({
     Utils.switchSpace(currentSpaceIndex, index);
     Utils.clickEffect(e);
   };
-  const onRightClick = () => {
+
+  const onRightClick = (e) => {
     setHovered(true);
     setNoDelay(true);
   };
@@ -140,6 +141,10 @@ export default function Space({
         <button
           className="space__inner"
           onClick={onClick}
+          onDoubleClick={(e) => {
+            e.stopPropagation();
+            handleDoubleClick(space.index);
+          }}
           onContextMenu={onRightClick}
         >
           <input
